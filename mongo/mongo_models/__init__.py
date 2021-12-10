@@ -6,11 +6,11 @@ class Product(Document):
 
 
 class Office(Document):
-    collections = db.offices
+    collection = db.offices
 
 
 class Employee(Document):
-    collections = db.employees
+    collection = db.employees
 
 
 class Customer(Document):

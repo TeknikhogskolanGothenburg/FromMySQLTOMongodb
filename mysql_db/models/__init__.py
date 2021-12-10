@@ -19,15 +19,6 @@ class Office(Base):
     territory = Column(String(10), nullable=False)
 
 
-class Productline(Base):
-    __tablename__ = 'productlines'
-
-    productLine = Column(String(50), primary_key=True)
-    textDescription = Column(String(4000))
-    htmlDescription = Column(MEDIUMTEXT)
-    image = Column(MEDIUMBLOB)
-
-
 class Employee(Base):
     __tablename__ = 'employees'
 
@@ -57,8 +48,18 @@ class Product(Base):
     buyPrice = Column(DECIMAL(10, 2), nullable=False)
     MSRP = Column(DECIMAL(10, 2), nullable=False)
 
-    productline = relationship('Productline')
+    product_lines = relationship('Productline', back_populates='product')
 
+
+class Productline(Base):
+    __tablename__ = 'productlines'
+
+    productLine = Column(String(50), primary_key=True)
+    textDescription = Column(String(4000))
+    htmlDescription = Column(MEDIUMTEXT)
+    image = Column(MEDIUMBLOB)
+
+    product = relationship('Product', back_populates='product_lines')
 
 class Customer(Base):
     __tablename__ = 'customers'

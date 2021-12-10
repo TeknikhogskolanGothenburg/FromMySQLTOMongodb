@@ -30,10 +30,10 @@ class Document(dict, ABC):
             del (self.__dict__['_id'])
             return self.collection.insert_one(self.__dict__)
         else:
-            return self.collection.update({'_id': self._id}, self.__dict__)
+            return self.collection.replace_one({'_id': self._id}, self.__dict__)
 
     def delete_field(self, field):
-        self.collection.update({'_id': self._id}, {"$unset": {field: ""}})
+        self.collection.update_one({'_id': self._id}, {"$unset": {field: ""}})
 
     @classmethod
     def insert_many(cls, items):

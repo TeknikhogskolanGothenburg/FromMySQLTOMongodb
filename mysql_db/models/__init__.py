@@ -2,7 +2,7 @@ from sqlalchemy import Column, DECIMAL, Date, ForeignKey, Integer, SmallInteger,
 from sqlalchemy.dialects.mysql import MEDIUMBLOB, MEDIUMTEXT
 from sqlalchemy.orm import relationship
 
-from mysql.db import Base
+from mysql_db.db import Base
 
 
 class Office(Base):
@@ -78,7 +78,7 @@ class Customer(Base):
     creditLimit = Column(DECIMAL(10, 2))
 
     employee = relationship('Employee')
-    payments = relationship('Payment')
+    payments = relationship('Payment', back_populates="customer")
 
 
 class Order(Base):
@@ -104,7 +104,7 @@ class Payment(Base):
     paymentDate = Column(Date, nullable=False)
     amount = Column(DECIMAL(10, 2), nullable=False)
 
-    customer = relationship('Customer')
+    customer = relationship('Customer', back_populates='payments')
 
 
 class Orderdetail(Base):
@@ -116,5 +116,5 @@ class Orderdetail(Base):
     priceEach = Column(DECIMAL(10, 2), nullable=False)
     orderLineNumber = Column(SmallInteger, nullable=False)
 
-    order = relationship('Order')
+    order = relationship('Order', back_populates="orderdetail")
     product = relationship('Product')
